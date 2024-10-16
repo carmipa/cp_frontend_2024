@@ -1,16 +1,27 @@
 import axios, { AxiosError } from 'axios';
-import * as Sentry from '@sentry/browser';
 
-// Inicialização do Sentry
-Sentry.init({
-  dsn: 'sua_dsn_do_sentry_aqui', // Substitua pela sua DSN do Sentry
-  tracesSampleRate: 1.0,
-});
+// Define the type Target
+type Target = {
+  id: number;
+  title: string;
+  isComplete: boolean;
+  description: string;
+  todo: Todo[];
+};
 
-// Função para verificar se é ambiente de produção
+// Define the type Todo
+type Todo = {
+  id: number;
+  title: string;
+  isComplete: boolean;
+  description: string;
+  targetId: number;
+};
+
+// Function to check if it's a production environment
 const isProduction = import.meta.env.PROD;
 
-// Funções de logging usando console
+// Logging functions using console
 const logger = {
   info: (...args: unknown[]) => {
     if (!isProduction) {
@@ -29,131 +40,102 @@ const logger = {
   },
 };
 
-const API_URL = 'https://todo-caio.azurewebsites.net/api';  // URL base da API
+const API_URL = 'http://caiohalbertfiap-001-site1.dtempurl.com/api';  // Complete base URL of the API
 
-// Credenciais para autenticação básica
-const username = '11194603'; // Seu nome de usuário
-const password = '60-dayfreetrial'; // Sua senha
-const authHeader = `Basic ${btoa(`${username}:${password}`)}`; // Codifica as credenciais em Base64
+// Credentials for basic authentication
+const username = '11194603'; // Your username
+const password = '60-dayfreetrial'; // Your password
+const authHeader = `Basic ${btoa(`${username}:${password}`)}`; // Encode credentials in Base64
 
-// Configurações padrão para todas as requisições Axios com autenticação básica
+// Default settings for all Axios requests with basic authentication
 const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
-    Authorization: authHeader,
+    Authorization: authHeader,  // Send the authentication header
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
 });
 
-// Configurando interceptores
+// Configuring interceptors
 axiosInstance.interceptors.request.use(
-    config => {
-      // Log da requisição
-      logger.info('Fazendo requisição', {
-        method: config.method,
-        url: config.url,
-        data: config.data,
-      });
+    (config) => {
+      // Log the request
+      logger.info('Making request', { method: config.method, url: config.url, data: config.data });
       return config;
     },
-    error => {
-      // Log de erro na requisição
-      logger.error('Erro na requisição', { error });
-      Sentry.captureException(error);
+    (error) => {
+      // Log request error
+      logger.error('Request error', { error });
       return Promise.reject(error);
-    },
+    }
 );
 
 axiosInstance.interceptors.response.use(
-    response => {
-      // Log da resposta
-      logger.info('Recebida resposta', {
-        url: response.config.url,
-        status: response.status,
-        data: response.data,
-      });
+    (response) => {
+      // Log the response
+      logger.info('Received response', { url: response.config.url, status: response.status, data: response.data });
       return response;
     },
-    error => {
-      // Log de erro na resposta
-      logger.error('Erro na resposta', { error });
-      Sentry.captureException(error);
+    (error) => {
+      // Log response error
+      logger.error('Response error', { error });
       return Promise.reject(error);
-    },
+    }
 );
 
-// Definição de tipos para Target e Todo
-export interface Target {
-  id?: number;
-  title: string;
-  description: string;
-  isComplete?: boolean;
-  targetId?: number; // Adicione esta linha
-}
-
-export interface Todo {
-  id?: number;
-  title: string;
-  description: string;
-  targetId: number;
-  isComplete: boolean;
-}
-
-// Função para tratar erros de forma padronizada e exibir logs detalhados
+// Function to handle errors in a standardized way and display detailed logs
 const handleRequestError = (error: AxiosError) => {
   if (error.response) {
     const status = error.response.status;
-    logger.error('Erro na resposta da API', {
-      status: status, // Status HTTP retornado pela API
-      data: error.response.data, // Dados retornados pela API
-      headers: error.response.headers, // Cabeçalhos HTTP
+    logger.error('API response error', {
+      status: status, // HTTP status returned by the API
+      data: error.response.data, // Data returned by the API
+      headers: error.response.headers, // HTTP headers
     });
 
-    // Tratamento personalizado com base nos códigos de status
+    // Custom handling based on status codes
     switch (status) {
       case 202:
-        logger.warn('Pedido aceito, mas ainda está sendo processado.');
+        logger.warn('Accepted but not processed');
         break;
       case 400:
-        logger.error('Erro 400: Requisição inválida. Verifique os dados enviados.');
+        logger.error('Bad Request');
         break;
       case 401:
-        logger.error('Erro 401: Não autorizado. Verifique suas credenciais.');
+        logger.error('Unauthorized');
         break;
       case 403:
-        logger.error('Erro 403: Acesso proibido.');
+        logger.error('Forbidden');
         break;
       case 404:
-        logger.error('Erro 404: Recurso não encontrado.');
+        logger.error('Not Found');
         break;
       case 500:
-        logger.error('Erro 500: Erro interno do servidor.');
+        logger.error('Internal Server Error');
         break;
       case 503:
-        logger.error('Erro 503: Serviço indisponível. Tente novamente mais tarde.');
+        logger.error('Service Unavailable');
         break;
       default:
-        logger.error(`Erro ${status}: Um erro inesperado ocorreu.`);
-        break;
+        logger.error('Unhandled status code');
     }
   } else if (error.request) {
-    logger.error('Erro na requisição:', { request: error.request });
+    logger.error('Request error:', { request: error.request });
   } else {
-    logger.error('Erro ao configurar a requisição:', { message: error.message });
+    logger.error('Error setting up request:', { message: error.message });
   }
-  Sentry.captureException(error);
-  throw new Error((error.response?.data as { message?: string })?.message || 'Erro na API');
+  throw new Error((error.response?.data as { message?: string })?.message || 'API error');
 };
 
-// ===== FUNÇÕES PARA MANIPULAR "TARGETS" =====
+// ===== FUNCTIONS TO HANDLE "TARGETS" =====
 
-// Função para obter todos os Targets
+// Function to get all Targets
 export const getAllTargets = async (): Promise<Target[] | null> => {
   try {
-    logger.info('Iniciando a requisição para obter todos os Targets');
+    logger.info('Starting request to get all Targets');
     const response = await axiosInstance.get<Target[]>('/Targets');
-    logger.info('Targets carregados com sucesso', { data: response.data });
+    logger.info('Targets loaded successfully', { data: response.data });
     return response.data;
   } catch (error) {
     handleRequestError(error as AxiosError);
@@ -161,51 +143,25 @@ export const getAllTargets = async (): Promise<Target[] | null> => {
   }
 };
 
-// Função para obter um Target específico por ID
+// Function to get a specific Target by ID
 export const getTargetById = async (id: number): Promise<Target | null> => {
   try {
-    logger.info(`Iniciando a requisição para obter o Target com ID: ${id}`);
-    const response = await axiosInstance.get<Target>(`/targets/${id}`);
-    if (response.data) {
-      logger.info('Target encontrado', { data: response.data });
-
-      // Uso do fetch para Detalhamento Adicional
-      const additionalDetailsResponse = await fetch(`${API_URL}/targets/${id}/details`, {
-        method: 'GET',
-        headers: {
-          Authorization: authHeader,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
-
-      if (additionalDetailsResponse.ok) {
-        const detailsData = await additionalDetailsResponse.json();
-        logger.info('Detalhes adicionais obtidos com sucesso', { data: detailsData });
-
-        // Combina os detalhes adicionais com o Target original
-        const fullTarget = { ...response.data, ...detailsData };
-        return fullTarget;
-      } else {
-        logger.warn('Não foi possível obter detalhes adicionais', { status: additionalDetailsResponse.status });
-        return response.data;
-      }
-    } else {
-      logger.warn(`Target com ID ${id} não encontrado.`);
-      return null;
-    }
+    logger.info(`Starting request to get Target with ID: ${id}`);
+    const response = await axiosInstance.get<Target>(`/Targets/${id}`);
+    logger.info('Target loaded successfully', { data: response.data });
+    return response.data;
   } catch (error) {
     handleRequestError(error as AxiosError);
     return null;
   }
 };
 
-// Função para criar um novo Target
+// Function to create a new Target
 export const createTarget = async (target: Target): Promise<Target | null> => {
   try {
-    logger.info('Iniciando a requisição para criar um novo Target', { target });
-    const response = await axiosInstance.post<Target>('/targets', target);
-    logger.info('Target criado com sucesso', { data: response.data });
+    logger.info('Starting request to create a new Target', { target });
+    const response = await axiosInstance.post<Target>('/Targets', target);
+    logger.info('Target created successfully', { data: response.data });
     return response.data;
   } catch (error) {
     handleRequestError(error as AxiosError);
@@ -213,33 +169,28 @@ export const createTarget = async (target: Target): Promise<Target | null> => {
   }
 };
 
-// Função para atualizar um Target existente
+// Function to update an existing Target
 export const updateTarget = async (id: number, target: Target): Promise<Target | null> => {
   try {
-    logger.info(`Iniciando a requisição para atualizar o Target com ID: ${id}`);
-    const response = await axiosInstance.put<Target>(`/targets/${id}`, target);
-    if (response.status === 204) {
-      logger.info(`Target com ID ${id} atualizado com sucesso.`);
-      return target;
-    } else {
-      logger.info('Target atualizado', { data: response.data });
-      return response.data;
-    }
+    logger.info(`Starting request to update Target with ID: ${id}`, { target });
+    const response = await axiosInstance.put<Target>(`/Targets/${id}`, target);
+    logger.info('Target updated successfully', { data: response.data });
+    return response.data;
   } catch (error) {
     handleRequestError(error as AxiosError);
     return null;
   }
 };
 
-// Função para deletar um Target pelo ID
+// Function to delete a Target by ID
 export const deleteTarget = async (id: number): Promise<void | null> => {
   try {
-    logger.info(`Iniciando a requisição para deletar o Target com ID: ${id}`);
-    const response = await axiosInstance.delete(`/targets/${id}`);
+    logger.info(`Starting request to delete Target with ID: ${id}`);
+    const response = await axiosInstance.delete(`/Targets/${id}`);
     if (response.status === 204) {
-      logger.info(`Target com ID ${id} deletado com sucesso.`);
+      logger.info(`Target with ID ${id} deleted successfully.`);
     } else {
-      logger.warn('Nenhum Target foi deletado.');
+      logger.warn('No Target was deleted.');
     }
   } catch (error) {
     handleRequestError(error as AxiosError);
@@ -247,14 +198,14 @@ export const deleteTarget = async (id: number): Promise<void | null> => {
   }
 };
 
-// ===== FUNÇÕES PARA MANIPULAR "TODOS" =====
+// ===== FUNCTIONS TO HANDLE "TODOS" =====
 
-// Função para obter todos os Todos
+// Function to get all Todos
 export const getAllTodos = async (): Promise<Todo[] | null> => {
   try {
-    logger.info('Iniciando a requisição para obter todos os Todos');
+    logger.info('Starting request to get all Todos');
     const response = await axiosInstance.get<Todo[]>('/Todo');
-    logger.info('Todos carregados com sucesso', { data: response.data });
+    logger.info('Todos loaded successfully', { data: response.data });
     return response.data;
   } catch (error) {
     handleRequestError(error as AxiosError);
@@ -262,31 +213,12 @@ export const getAllTodos = async (): Promise<Todo[] | null> => {
   }
 };
 
-// Função para obter um Todo específico por ID
+// Function to get a specific Todo by ID
 export const getTodoById = async (id: number): Promise<Todo | null> => {
   try {
-    logger.info(`Iniciando a requisição para obter o Todo com ID: ${id}`);
-    const response = await axiosInstance.get<Todo>(`todo/${id}`);
-    if (response.data) {
-      logger.info('Todo encontrado', { data: response.data });
-      // Uso do fetch para Detalhamento Adicional (se aplicável)
-      return response.data;
-    } else {
-      logger.warn(`Todo com ID ${id} não encontrado.`);
-      return null;
-    }
-  } catch (error) {
-    handleRequestError(error as AxiosError);
-    return null;
-  }
-};
-
-// Função para criar um novo Todo
-export const createTodo = async (todo: Omit<Todo, 'id'>): Promise<Todo | null> => {
-  try {
-    logger.info('Iniciando a requisição para criar um novo Todo', { todo });
-    const response = await axiosInstance.post<Todo>('/Todo', todo);
-    logger.info('Todo criado com sucesso', { data: response.data });
+    logger.info(`Starting request to get Todo with ID: ${id}`);
+    const response = await axiosInstance.get<Todo>(`/Todo/${id}`);
+    logger.info('Todo loaded successfully', { data: response.data });
     return response.data;
   } catch (error) {
     handleRequestError(error as AxiosError);
@@ -294,33 +226,41 @@ export const createTodo = async (todo: Omit<Todo, 'id'>): Promise<Todo | null> =
   }
 };
 
-// Função para atualizar um Todo existente
-export const updateTodo = async (id: number, todo: Todo): Promise<Todo | null> => {
+// Function to create a new Todo
+export const createTodo = async (todo: Omit<Todo, 'id'>): Promise<Todo | null> => {
   try {
-    logger.info(`Iniciando a requisição para atualizar o Todo com ID: ${id}`);
-    const response = await axiosInstance.put<Todo>(`/Todo/${id}`, todo);
-    if (response.status === 204) {
-      logger.info(`Todo com ID ${id} atualizado com sucesso.`);
-      return todo;
-    } else {
-      logger.info('Todo atualizado', { data: response.data });
-      return response.data;
-    }
+    logger.info('Starting request to create a new Todo', { todo });
+    const response = await axiosInstance.post<Todo>('/Todo', todo);
+    logger.info('Todo created successfully', { data: response.data });
+    return response.data;
   } catch (error) {
     handleRequestError(error as AxiosError);
     return null;
   }
 };
 
-// Função para deletar um Todo pelo ID
+// Function to update an existing Todo
+export const updateTodo = async (id: number, todo: Todo): Promise<Todo | null> => {
+  try {
+    logger.info(`Starting request to update Todo with ID: ${id}`, { todo });
+    const response = await axiosInstance.put<Todo>(`/Todo/${id}`, todo);
+    logger.info('Todo updated successfully', { data: response.data });
+    return response.data;
+  } catch (error) {
+    handleRequestError(error as AxiosError);
+    return null;
+  }
+};
+
+// Function to delete a Todo by ID
 export const deleteTodo = async (id: number): Promise<void | null> => {
   try {
-    logger.info(`Iniciando a requisição para deletar o Todo com ID: ${id}`);
-    const response = await axiosInstance.delete(`/todo/${id}`);
+    logger.info(`Starting request to delete Todo with ID: ${id}`);
+    const response = await axiosInstance.delete(`/Todo/${id}`);
     if (response.status === 204) {
-      logger.info(`Todo com ID ${id} deletado com sucesso.`);
+      logger.info(`Todo with ID ${id} deleted successfully.`);
     } else {
-      logger.warn('Nenhum Todo foi deletado.');
+      logger.warn('No Todo was deleted.');
     }
   } catch (error) {
     handleRequestError(error as AxiosError);

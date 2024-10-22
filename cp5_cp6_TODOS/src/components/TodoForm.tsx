@@ -106,25 +106,25 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoUpdated }) => {
               type="text"
               placeholder="ID"
               value={id}
-              onChange={(e) => setId(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
           />
           <input
               type="text"
-              placeholder="Title"
+              placeholder="Título"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
           />
           <input
               type="text"
-              placeholder="Description"
+              placeholder="Descrição"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
           />
           <input
               type="number"
-              placeholder="Target ID"
+              placeholder="Todo ID"
               value={targetId ?? ''}
-              onChange={(e) => setTargetId(Number(e.target.value))}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTargetId(Number(e.target.value))}
           />
           <div>
             <label>
@@ -133,13 +133,13 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoUpdated }) => {
                   checked={isComplete}
                   onChange={() => setIsComplete(!isComplete)}
               />
-              Complete?
+              Completo?
             </label>
           </div>
-          <button type="button" onClick={handleCreate} className="bg-green">Create</button>
-          <button type="button" onClick={handleUpdate} className="bg-yellow">Update</button>
-          <button type="button" onClick={handleDelete} className="bg-red">Delete</button>
-          <button type="button" onClick={handleFindById} className="bg-blue">Find by ID</button>
+          <button type="button" onClick={handleCreate} className="bg-green">Criar</button>
+          <button type="button" onClick={handleUpdate} className="bg-yellow">Atualizar</button>
+          <button type="button" onClick={handleDelete} className="bg-red">Deletar</button>
+          <button type="button" onClick={handleFindById} className="bg-blue">Buscar por ID</button>
         </form>
 
         {message && (

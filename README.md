@@ -3,19 +3,20 @@
 Bem-vindo ao repositório do projeto de Front-End para 2024! Aqui você encontrará todas as informações e recursos relacionados ao nosso trabalho.
 
 ### Professor: Caio Halbert Jacinto
-## 👥 Integrantes
 
-### Paulo André Carminati
+## 👥 Integrante
+
+- **Nome:** Paulo André Carminati
 - **RM:** 557881
 - **GitHub:** [github.com/carmipa](https://github.com/carmipa)
 
+## 📂 Repositório do Projeto
 
-## 📂 Repositório do Trabalho
-https://github.com/carmipa/cp_frontend_2024/tree/main
+- **GitHub:** [Repositório no GitHub](https://github.com/carmipa/cp_frontend_2024/tree/main)
 
-Acesse o repositório principal do projeto:
+## 🚀 Projeto Rodando
 
-🔗 **GitHub:** [github.com/carmipa/cp_java_2024](https://github.com/carmipa/cp_java_2024)
+- **Vercel:** [Projeto no Vercel](https://cp-frontend-2024.vercel.app/)
 
 ---
 

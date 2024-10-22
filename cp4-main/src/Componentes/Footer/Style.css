@@ -1,0 +1,42 @@
+.grid1, .grid1Coluna1, .grid1Coluna2, .grid1Coluna3, .footer{
+    margin-top: 2% !important;
+    margin-bottom: 2% !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important; 
+    background-color:#1C171D !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between; /* Distribui o espaço entre as colunas */
+    align-items: flex-start; /* Alinha os itens ao topo */
+    padding: 20px; /* Espaçamento interno */
+}
+
+.grid1 {
+    flex: 0 0 70%; /* Primeira coluna ocupa 70% do espaço */
+    
+}
+
+.grid1Coluna1, .grid1Coluna2, .grid1Coluna3 {
+    flex: 0 0 10%; /* Cada uma das outras colunas ocupa 10% do espaço */
+    margin: 0 10px; /* Espaçamento entre as colunas */
+    text-align: left;
+}
+
+.grid1 img {
+    max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho da coluna */
+    width: 40%; /* Define a largura da imagem */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+h3 {
+    margin: 5px 0; /* Espaçamento entre os títulos */
+}
+
+.gridColuna1Linha1, .gridColuna2Linha1, .gridColuna3Linha1 {
+    color: #7E8087
+;
+}
+

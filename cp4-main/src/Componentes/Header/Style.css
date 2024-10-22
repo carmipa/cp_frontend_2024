@@ -1,0 +1,120 @@
+.grid-container, .header, .grid {
+    margin-top: 2% !important;
+    margin-bottom: 2% !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important; 
+    background-color:transparent !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.header .grid-container {
+    display: grid;
+    grid-template-columns: 20% 20% 60%;
+    gap: 10px; /* Ajuste o espaço entre as colunas conforme necessário */
+    align-items: center; /* Alinha verticalmente ao centro */
+    justify-items: center; /* Alinha horizontalmente ao centro */
+}
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%; /* Garante que os itens ocupem toda a largura da coluna */
+}
+.grid-item img {
+    width: 70%; /* Ajuste a largura conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+.pesquisa {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%; /* Ajusta a largura ao conteúdo */
+    max-width: 700px; /* Define uma largura máxima */
+}
+
+.pesquisa input {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 5px;
+    font-size: 16px;
+    color: #333; /* Cor do texto */
+    flex-grow: 1; /* Faz o input ocupar o espaço disponível */
+}
+
+.pesquisa .icon {
+    margin-right: 5px;
+    color: #888;
+}
+
+.pesquisa button {
+    background-color: #D5224E; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão */
+    padding: 10px 20px; /* Ajusta o espaçamento interno */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    font-size: 16px; /* Tamanho da fonte */
+    width: 30%; 
+}
+
+/* grid 2 */
+
+.grid {
+    display: grid;
+    grid-template-columns: 50% 25% 25%;
+    grid-template-rows: auto auto; /* Adiciona uma nova linha */
+    gap: 5px; /* Espaço entre as colunas */
+}
+
+
+
+.grid h1 {
+    grid-column: 1 / 2; /* Primeira coluna */
+    margin-bottom: 20px;
+    margin-top: 50px; /* Ajuste o valor conforme necessário */
+    color: white; /* Cor do texto */
+    text-align: center; /* Centraliza o texto */
+    font-size: 40px;
+    white-space: nowrap; /* Garante que o texto fique em uma linha só */
+}
+
+.grid ul {
+    list-style-type: none; /* Remove os pontos */
+    padding: 0;
+    color: white; /* Cor do texto */
+}
+
+.grid ul:nth-of-type(1) {
+    grid-column: 2 / 3; /* Segunda coluna */
+}
+
+.grid ul:nth-of-type(2) {
+    grid-column: 3 / 4; /* Terceira coluna */
+}
+
+.grid li {
+    margin-bottom: 2px;
+}
+
+.grid img {
+    max-width: 98%;
+    height: auto;
+}
+
+/* Estilo para a nova linha de imagens */
+.grid .image-row {
+    grid-column: 1 / 4; /* Ocupa todas as colunas */
+    display: flex;
+    justify-content: center; /* Centraliza a imagem horizontalmente */
+    align-items: center; /* Centraliza a imagem verticalmente */
+}
+
+.grid .image-row img {
+    width: 100%; /* Ajuste o valor conforme necessário para ocupar mais largura */
+    height: auto;
+    max-height: 100%; /* Ajuste o valor conforme necessário para manter a proporção */
+}

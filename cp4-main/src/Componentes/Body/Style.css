@@ -1,0 +1,319 @@
+/*
+body {
+    font-family: Krona One;
+}
+*/
+
+.grid1, .grid2, .grid3, .grid4, .grid5, .grid6, .grid7, .grid8, .grid9, .grid10, .grid11 {
+    margin-top: 2% !important;
+    margin-bottom: 2% !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.grid1, .grid2, .grid3, .grid4, .grid5, .grid6, .grid7, .grid8, .grid9, .grid11 {
+    background-color:#1C171D !important;
+}
+
+/* grid1 */
+
+.grid1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.grid1 .linha1 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.grid1 img {
+    margin-right: 10px;
+}
+
+.grid1 h2 {
+    padding: 0;
+}
+
+.grid1 p {
+    padding: 0;
+}
+
+/*grid2 */
+
+.grid2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid2 .left {
+    display: flex;
+    align-items: center;
+}
+
+.grid2 .right {
+    display: flex;
+    align-items: center;
+}
+
+.grid2 img {
+    margin-right: 10px;
+}
+
+.grid2 h2 {
+    padding: 0;
+}
+
+.red-text2 {
+    color: #D5224E;
+}
+
+/*grid3 */
+
+.grid3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid3 .left {
+    display: flex;
+    align-items: center;
+}
+
+.grid3 .right {
+    display: flex;
+    align-items: center;
+}
+
+.grid3 .bto3{
+    color: white;
+    background-color: #D5224E;
+    width: 400px; 
+    
+}
+
+.grid3 img {
+    margin-right: 10px;
+}
+
+.grid3 h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.red-text3 {
+    color: white;
+}
+.linha3 {
+    display: flex;
+    align-items: center;
+}
+
+.linha3 img {
+    margin-right: 10px;
+}
+
+.red-text3 {
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/*grid4 */
+
+.grid4 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid4Coluna1 {
+    text-align: left; /* Alinha o conteúdo da coluna 1 à esquerda */
+    color: #D5224E; /* Define a cor do texto */
+}
+
+.grid4Coluna2 {
+    text-align: right; /* Alinha o conteúdo da coluna 2 à direita */
+    color: white; /* Define a cor do texto para preto */
+}
+
+/*grid5 */
+
+.grid5 {
+    display: grid;
+    grid-template-rows: auto auto; /* Define duas linhas */
+}
+
+.grid5Linha1 {
+    text-align: left; /* Alinha o conteúdo da primeira linha à esquerda */
+}
+
+.grid5Linha2 {
+    text-align: justify; /* Justifica o conteúdo da segunda linha */
+}
+
+/*grid6 */
+
+.grid6 {
+    display: flex;
+    align-items: center; /* Alinha verticalmente os itens ao centro */
+}
+
+.grid6Coluna1, .grid6Coluna2, .grid6Coluna3 {
+    
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+
+.grid6Coluna1 {
+    display: flex;
+    flex: 0 0 12%; /* Coluna 1 ocupa 10% do espaço */
+}
+
+.grid6Coluna2 {
+    display: flex;
+    flex: 0 0 12%; /* Coluna 2 ocupa 10% do espaço */
+}
+
+.grid6Coluna3 {
+    flex: 0 0 76%; /* Coluna 3 ocupa 80% do espaço */
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    text-align: right; /* Alinha o texto à esquerda */
+    margin-right: auto; /* Empurra a coluna para a direita */
+    width: 100%; /* Garante que a coluna ocupe toda a largura disponível */
+}
+
+.grid6Coluna1 img, .grid6Coluna2 img {
+    margin-right: 8px; /* Espaçamento entre a imagem e o texto */
+}
+
+/*grid7 */
+
+.grid7 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid7 .left {
+    display: flex;
+    align-items: center;
+}
+
+.grid7 .right {
+    display: flex;
+    align-items: center;
+}
+
+.grid7 .bto7{
+    color: white;
+    background-color: #D5224E;
+    width: 400px; 
+    
+}
+
+.grid7 img {
+    margin-right: 10px;
+}
+
+.grid7 h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.red-text7 {
+    color: white;
+}
+.linha7 {
+    display: flex;
+    align-items: center;
+}
+
+.linha7 img {
+    margin-right: 10px;
+}
+
+.red-text7 {
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/*grid8 */
+
+.grid8 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid8Coluna1 {
+    text-align: left; /* Alinha o conteúdo da coluna 1 à esquerda */
+    color: #D5224E; /* Define a cor do texto */
+}
+
+.grid8Coluna2 {
+    text-align: right; /* Alinha o conteúdo da coluna 2 à direita */
+    color: white; /* Define a cor do texto para preto */
+}
+
+/*grid9 */
+
+.grid9{
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+}
+
+/*grid10 */
+
+.grid10 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #D5224E; /* Define a cor do texto */
+    background-color: black;
+}
+
+/*grid11 */
+
+.grid11 {
+    display: flex;
+    align-items: center; /* Alinha verticalmente os itens ao centro */
+}
+
+.grid11Coluna1, .grid11Coluna2, .grid11Coluna3 {
+    
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+
+.grid11Coluna1 {
+    display: flex;
+    flex: 0 0 12%; /* Coluna 1 ocupa 10% do espaço */
+}
+
+.grid11Coluna2 {
+    display: flex;
+    flex: 0 0 12%; /* Coluna 2 ocupa 10% do espaço */
+}
+
+.grid11Coluna3 {
+    flex: 0 0 76%; /* Coluna 3 ocupa 80% do espaço */
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    text-align: right; /* Alinha o texto à esquerda */
+    margin-right: auto; /* Empurra a coluna para a direita */
+    width: 100%; /* Garante que a coluna ocupe toda a largura disponível */
+}
+
+.grid11Coluna1 img, .grid11Coluna2 img {
+    margin-right: 8px; /* Espaçamento entre a imagem e o texto */
+}
+
+
+
+
+
+
